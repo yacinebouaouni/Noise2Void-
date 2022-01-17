@@ -1,6 +1,6 @@
 
 
-from PIL import Image
+from PIL import Image,ImageOps
 import numpy as np
 
 def PSNR(original, compressed):
@@ -13,10 +13,10 @@ def PSNR(original, compressed):
     return psnr
 
 
-original = np.array(Image.open('Data/test/original_png/0001.png'))
-denoised1 = np.array(Image.open('DenoisedData/0001_N2V.png'))
+original = np.array(ImageOps.grayscale(Image.open('Data/test/original_png/0000.png')))
+denoised1 = np.array(Image.open('DenoisedData/0000_N2V.png'))
 
-noisy = np.array(Image.open('Data/test/noisy25/0001.png'))
+noisy = np.array(Image.open('Data/test_b/0000.png'))
 
 print(f'Denoised1 Image PSNR = {PSNR(original,denoised1)}')
 
