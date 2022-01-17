@@ -4,6 +4,7 @@ import os
 import sys
 import argparse
 from glob import glob
+import imageio
 import csbdeep.io
 
 parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
@@ -37,7 +38,7 @@ from tifffile import imread
 model_name = args.name
 basedir = args.baseDir
 model = N2V(config=None, name=model_name, basedir=basedir)
-
+model.load_weights('weights_best.h5')
 
 tiles = (args.tile, args.tile)
 
@@ -88,7 +89,9 @@ for i, img in enumerate(imgs):
 
     print(pred.shape)
     outpath=args.output
-    filename=os.path.basename(files[i]).replace('.tif','_N2V.tif')
+    filename=os.path.basename(files[i]).replace('.png','_N2V.png')
     outpath=os.path.join(outpath,filename)
     print('writing file to ',outpath, outDims, pred.shape)
-    csbdeep.io.save_tiff_imagej_compatible(outpath, pred.astype(np.float32), outDims)
+
+    imageio.imwrite(outpath, (pred*255.).astype(np.uint8))
+    #csbdeep.io.save_tiff_imagej_compatible(outpath, pred.astype(np.float32), outDims)

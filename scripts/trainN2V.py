@@ -70,7 +70,7 @@ if 'Z' in args.dims:
     pshape=(args.patchSizeZ, args.patchSizeXY, args.patchSizeXY)
 
 print(pshape)
-patches = datagen.generate_patches_from_list(imgs[:1], shape=pshape, augment=(not args.noAugment))
+patches = datagen.generate_patches_from_list(imgs[:], shape=pshape, augment=(not args.noAugment))
 
 # The patches are non-overlapping, so we can split them into train and validation data.
 frac= int( (len(patches))*float(args.validationFraction)/100.0)
@@ -86,6 +86,7 @@ config = N2VConfig(X, unet_kern_size=args.netKernelSize,
                    n2v_manipulator='uniform_withCP', n2v_neighborhood_radius=5, train_learning_rate=args.learningRate,
                    unet_n_depth=args.netDepth,
                    unet_n_first=args.unet_n_first
+
                    )
 
 # Let's look at the parameters stored in the config-object.
