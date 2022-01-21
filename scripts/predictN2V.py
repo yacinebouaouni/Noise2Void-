@@ -38,7 +38,6 @@ from tifffile import imread
 model_name = args.name
 basedir = args.baseDir
 model = N2V(config=None, name=model_name, basedir=basedir)
-model.load_weights('weights_best.h5')
 
 tiles = (args.tile, args.tile)
 

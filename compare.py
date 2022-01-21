@@ -2,6 +2,7 @@
 
 from PIL import Image,ImageOps
 import numpy as np
+import os
 
 def PSNR(original, compressed):
     mse = np.mean((original - compressed) ** 2)
@@ -13,14 +14,20 @@ def PSNR(original, compressed):
     return psnr
 
 
-original = np.array(ImageOps.grayscale(Image.open('Data/test/original_png/0000.png')))
-denoised1 = np.array(Image.open('DenoisedData/0000_N2V.png'))
+files = os.listdir('Data/Set14/test_b')
 
-noisy = np.array(Image.open('Data/test_b/0000.png'))
+for i in range(len(files)):
 
-print(f'Denoised1 Image PSNR = {PSNR(original,denoised1)}')
+    original = np.array(ImageOps.grayscale(Image.open('Data')))
+    denoised1 = np.array(Image.open('Data/DATA4b_den/Normal_N2V.png'))
+
+    noisy = np.array(Image.open('Data/DATA4_b/Normal.png'))
+
+    im1 = ImageOps.grayscale(Image.fromarray(original - denoised1))
 
 
-print(f'Noisy PSNR = {PSNR(original,noisy)}')
+    #print(f'Denoised1 Image PSNR = {PSNR(original,denoised1)}')
+
+    #print(f'Noisy PSNR = {PSNR(original,noisy)}')
 
 
